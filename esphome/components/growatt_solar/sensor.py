@@ -30,6 +30,12 @@ CONF_TOTAL_GENERATION_TIME = "total_generation_time"
 CONF_TODAY_GENERATION_TIME = "today_generation_time"
 CONF_PV1 = "pv1"
 CONF_PV2 = "pv2"
+CONF_PV3 = "pv3"
+CONF_PV4 = "pv4"
+CONF_PV5 = "pv5"
+CONF_PV6 = "pv6"
+CONF_PV7 = "pv7"
+CONF_PV8 = "pv8"
 UNIT_KILOWATT_HOURS = "kWh"
 UNIT_HOURS = "h"
 UNIT_KOHM = "kΩ"
@@ -113,6 +119,12 @@ CONFIG_SCHEMA = (
             cv.Optional(CONF_PHASE_C): PHASE_SCHEMA,
             cv.Optional(CONF_PV1): PV_SCHEMA,
             cv.Optional(CONF_PV2): PV_SCHEMA,
+            cv.Optional(CONF_PV3): PV_SCHEMA,
+            cv.Optional(CONF_PV4): PV_SCHEMA,
+            cv.Optional(CONF_PV5): PV_SCHEMA,
+            cv.Optional(CONF_PV6): PV_SCHEMA,
+            cv.Optional(CONF_PV7): PV_SCHEMA,
+            cv.Optional(CONF_PV8): PV_SCHEMA,
             cv.Optional(CONF_INVERTER_STATUS): sensor.sensor_schema(),
             cv.Optional(CONF_FREQUENCY): sensor.sensor_schema(
                 unit_of_measurement=UNIT_HERTZ,
@@ -201,7 +213,7 @@ async def to_code(config):
                 sens = await sensor.new_sensor(phase_config[sensor_type])
                 cg.add(getattr(var, f"set_{sensor_type}_sensor")(i, sens))
 
-    for i, pv in enumerate([CONF_PV1, CONF_PV2]):
+    for i, pv in enumerate([CONF_PV1, CONF_PV2, CONF_PV3, CONF_PV4, CONF_PV5, CONF_PV6, CONF_PV7, CONF_PV8]):
         if pv not in config:
             continue
 

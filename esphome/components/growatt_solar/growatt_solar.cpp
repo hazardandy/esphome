@@ -108,6 +108,30 @@ void GrowattSolar::on_modbus_data(const std::vector<uint8_t> &data) {
       publish_1_reg_sensor_state(this->pvs_[1].current_sensor_, 8, ONE_DEC_UNIT);
       publish_2_reg_sensor_state(this->pvs_[1].active_power_sensor_, 9, 10, ONE_DEC_UNIT);
 
+      publish_1_reg_sensor_state(this->pvs_[2].voltage_sensor_, 11, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[2].current_sensor_, 12, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->pvs_[2].active_power_sensor_, 13, 14, ONE_DEC_UNIT);
+
+      publish_1_reg_sensor_state(this->pvs_[3].voltage_sensor_, 15, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[3].current_sensor_, 16, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->pvs_[3].active_power_sensor_, 17, 18, ONE_DEC_UNIT);
+
+      publish_1_reg_sensor_state(this->pvs_[4].voltage_sensor_, 19, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[4].current_sensor_, 20, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->pvs_[4].active_power_sensor_, 21, 22, ONE_DEC_UNIT);
+
+      publish_1_reg_sensor_state(this->pvs_[5].voltage_sensor_, 23, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[5].current_sensor_, 24, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->pvs_[5].active_power_sensor_, 25, 26, ONE_DEC_UNIT);
+
+      publish_1_reg_sensor_state(this->pvs_[6].voltage_sensor_, 27, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[6].current_sensor_, 28, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->pvs_[6].active_power_sensor_, 29, 30, ONE_DEC_UNIT);
+
+      publish_1_reg_sensor_state(this->pvs_[7].voltage_sensor_, 31, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[7].current_sensor_, 32, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->pvs_[7].active_power_sensor_, 33, 34, ONE_DEC_UNIT);
+
       publish_2_reg_sensor_state(this->grid_active_power_sensor_, 35, 36, ONE_DEC_UNIT);
       publish_1_reg_sensor_state(this->grid_frequency_sensor_, 37, TWO_DEC_UNIT);
 

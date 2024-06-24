@@ -104,9 +104,9 @@ void GrowattSolar::on_modbus_data(const std::vector<uint8_t> &data) {
       publish_1_reg_sensor_state(this->pvs_[0].current_sensor_, 12, ONE_DEC_UNIT);
       publish_2_reg_sensor_state(this->pvs_[0].active_power_sensor_, 13, 14, ONE_DEC_UNIT);
 
-      publish_1_reg_sensor_state(this->pvs_[1].voltage_sensor_, 7, ONE_DEC_UNIT);
-      publish_1_reg_sensor_state(this->pvs_[1].current_sensor_, 8, ONE_DEC_UNIT);
-      publish_2_reg_sensor_state(this->pvs_[1].active_power_sensor_, 9, 10, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[1].voltage_sensor_, 11, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[1].current_sensor_, 12, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->pvs_[1].active_power_sensor_, 13, 14, ONE_DEC_UNIT);
 
       publish_1_reg_sensor_state(this->pvs_[2].voltage_sensor_, 11, ONE_DEC_UNIT);
       publish_1_reg_sensor_state(this->pvs_[2].current_sensor_, 12, ONE_DEC_UNIT);

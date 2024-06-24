@@ -15,6 +15,7 @@ static const float ONE_DEC_UNIT = 0.1;
 enum GrowattProtocolVersion {
   RTU = 0,
   RTU2,
+  TLXH,
 };
 
 class GrowattSolar : public PollingComponent, public modbus::ModbusDevice {

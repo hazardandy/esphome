@@ -7,6 +7,7 @@ namespace growatt_solar {
 static const char *const TAG = "growatt_solar";
 
 static const uint8_t MODBUS_CMD_READ_IN_REGISTERS = 0x04;
+static const uint8_t MODBUS_READ_ADDRESS[] = {0, 0, 3000};  // indexed with enum GrowattProtocolVersion
 static const uint8_t MODBUS_REGISTER_COUNT[] = {33, 95};  // indexed with enum GrowattProtocolVersion
 
 void GrowattSolar::loop() {
@@ -30,7 +31,7 @@ void GrowattSolar::update() {
   }
 
   this->waiting_to_update_ = false;
-  this->send(MODBUS_CMD_READ_IN_REGISTERS, 0, MODBUS_REGISTER_COUNT[this->protocol_version_]);
+  this->send(MODBUS_CMD_READ_IN_REGISTERS, MODBUS_READ_ADDRESS[this->protocol_version_], MODBUS_REGISTER_COUNT[this->protocol_version_]);
   this->last_send_ = millis();
 }
 
@@ -100,37 +101,13 @@ void GrowattSolar::on_modbus_data(const std::vector<uint8_t> &data) {
 
       publish_2_reg_sensor_state(this->pv_active_power_sensor_, 1, 2, ONE_DEC_UNIT);
 
-      publish_1_reg_sensor_state(this->pvs_[0].voltage_sensor_, 11, ONE_DEC_UNIT);
-      publish_1_reg_sensor_state(this->pvs_[0].current_sensor_, 12, ONE_DEC_UNIT);
-      publish_2_reg_sensor_state(this->pvs_[0].active_power_sensor_, 13, 14, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[0].voltage_sensor_, 3, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[0].current_sensor_, 4, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->pvs_[0].active_power_sensor_, 5, 6, ONE_DEC_UNIT);
 
-      publish_1_reg_sensor_state(this->pvs_[1].voltage_sensor_, 11, ONE_DEC_UNIT);
-      publish_1_reg_sensor_state(this->pvs_[1].current_sensor_, 12, ONE_DEC_UNIT);
-      publish_2_reg_sensor_state(this->pvs_[1].active_power_sensor_, 13, 14, ONE_DEC_UNIT);
-
-      publish_1_reg_sensor_state(this->pvs_[2].voltage_sensor_, 11, ONE_DEC_UNIT);
-      publish_1_reg_sensor_state(this->pvs_[2].current_sensor_, 12, ONE_DEC_UNIT);
-      publish_2_reg_sensor_state(this->pvs_[2].active_power_sensor_, 13, 14, ONE_DEC_UNIT);
-
-      publish_1_reg_sensor_state(this->pvs_[3].voltage_sensor_, 15, ONE_DEC_UNIT);
-      publish_1_reg_sensor_state(this->pvs_[3].current_sensor_, 16, ONE_DEC_UNIT);
-      publish_2_reg_sensor_state(this->pvs_[3].active_power_sensor_, 17, 18, ONE_DEC_UNIT);
-
-      publish_1_reg_sensor_state(this->pvs_[4].voltage_sensor_, 19, ONE_DEC_UNIT);
-      publish_1_reg_sensor_state(this->pvs_[4].current_sensor_, 20, ONE_DEC_UNIT);
-      publish_2_reg_sensor_state(this->pvs_[4].active_power_sensor_, 21, 22, ONE_DEC_UNIT);
-
-      publish_1_reg_sensor_state(this->pvs_[5].voltage_sensor_, 23, ONE_DEC_UNIT);
-      publish_1_reg_sensor_state(this->pvs_[5].current_sensor_, 24, ONE_DEC_UNIT);
-      publish_2_reg_sensor_state(this->pvs_[5].active_power_sensor_, 25, 26, ONE_DEC_UNIT);
-
-      publish_1_reg_sensor_state(this->pvs_[6].voltage_sensor_, 27, ONE_DEC_UNIT);
-      publish_1_reg_sensor_state(this->pvs_[6].current_sensor_, 28, ONE_DEC_UNIT);
-      publish_2_reg_sensor_state(this->pvs_[6].active_power_sensor_, 29, 30, ONE_DEC_UNIT);
-
-      publish_1_reg_sensor_state(this->pvs_[7].voltage_sensor_, 31, ONE_DEC_UNIT);
-      publish_1_reg_sensor_state(this->pvs_[7].current_sensor_, 32, ONE_DEC_UNIT);
-      publish_2_reg_sensor_state(this->pvs_[7].active_power_sensor_, 33, 34, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[1].voltage_sensor_, 7, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[1].current_sensor_, 8, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->pvs_[1].active_power_sensor_, 9, 10, ONE_DEC_UNIT);
 
       publish_2_reg_sensor_state(this->grid_active_power_sensor_, 35, 36, ONE_DEC_UNIT);
       publish_1_reg_sensor_state(this->grid_frequency_sensor_, 37, TWO_DEC_UNIT);
@@ -149,6 +126,47 @@ void GrowattSolar::on_modbus_data(const std::vector<uint8_t> &data) {
 
       publish_2_reg_sensor_state(this->today_production_, 53, 54, ONE_DEC_UNIT);
       publish_2_reg_sensor_state(this->total_energy_production_, 55, 56, ONE_DEC_UNIT);
+
+      publish_1_reg_sensor_state(this->inverter_module_temp_, 93, ONE_DEC_UNIT);
+      break;
+    case TLXH: {
+      publish_1_reg_sensor_state(this->inverter_status_, 0, 1);
+
+      publish_2_reg_sensor_state(this->pv_active_power_sensor_, 1, 2, ONE_DEC_UNIT);
+
+      publish_1_reg_sensor_state(this->pvs_[0].voltage_sensor_, 3, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[0].current_sensor_, 4, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->pvs_[0].active_power_sensor_, 5, 6, ONE_DEC_UNIT);
+
+      publish_1_reg_sensor_state(this->pvs_[1].voltage_sensor_, 7, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[1].current_sensor_, 8, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->pvs_[1].active_power_sensor_, 9, 10, ONE_DEC_UNIT);
+
+      publish_1_reg_sensor_state(this->pvs_[2].voltage_sensor_, 11, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[2].current_sensor_, 12, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->pvs_[2].active_power_sensor_, 13, 14, ONE_DEC_UNIT);
+
+      publish_1_reg_sensor_state(this->pvs_[3].voltage_sensor_, 15, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->pvs_[3].current_sensor_, 16, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->pvs_[3].active_power_sensor_, 17, 18, ONE_DEC_UNIT);
+
+      publish_2_reg_sensor_state(this->grid_active_power_sensor_, 23, 24, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->grid_frequency_sensor_, 25, TWO_DEC_UNIT);
+
+      publish_1_reg_sensor_state(this->phases_[0].voltage_sensor_, 26, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->phases_[0].current_sensor_, 27, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->phases_[0].active_power_sensor_, 28, 29, ONE_DEC_UNIT);
+
+      publish_1_reg_sensor_state(this->phases_[1].voltage_sensor_, 30, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->phases_[1].current_sensor_, 31, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->phases_[1].active_power_sensor_, 32, 33, ONE_DEC_UNIT);
+
+      publish_1_reg_sensor_state(this->phases_[2].voltage_sensor_, 34, ONE_DEC_UNIT);
+      publish_1_reg_sensor_state(this->phases_[2].current_sensor_, 35, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->phases_[2].active_power_sensor_, 36, 37, ONE_DEC_UNIT);
+
+      publish_2_reg_sensor_state(this->today_production_, 49, 50, ONE_DEC_UNIT);
+      publish_2_reg_sensor_state(this->total_energy_production_, 51, 52, ONE_DEC_UNIT);
 
       publish_1_reg_sensor_state(this->inverter_module_temp_, 93, ONE_DEC_UNIT);
       break;

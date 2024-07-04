@@ -8,7 +8,7 @@ static const char *const TAG = "growatt_solar";
 
 static const uint8_t MODBUS_CMD_READ_IN_REGISTERS = 0x04;
 static const uint16_t MODBUS_READ_ADDRESS[] = {0, 0, 3000};  // indexed with enum GrowattProtocolVersion
-static const uint8_t MODBUS_REGISTER_COUNT[] = {33, 95};  // indexed with enum GrowattProtocolVersion
+static const uint8_t MODBUS_REGISTER_COUNT[] = {33, 95, 95};  // indexed with enum GrowattProtocolVersion
 
 void GrowattSolar::loop() {
   // If update() was unable to send we retry until we can send.

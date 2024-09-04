@@ -38,6 +38,8 @@ UNIT_KOHM = "kΩ"
 UNIT_MILLIAMPERE = "mA"
 
 CONF_INVERTER_STATUS = "inverter_status"
+CONF_FAULT_CODE = "fault_code"
+CONF_WARN_CODE = "warn_code"
 CONF_PV_ACTIVE_POWER = "pv_active_power"
 CONF_INVERTER_MODULE_TEMP = "inverter_module_temp"
 CONF_PROTOCOL_VERSION = "protocol_version"
@@ -100,7 +102,7 @@ GrowattProtocolVersion = growatt_solar_ns.enum("GrowattProtocolVersion")
 PROTOCOL_VERSIONS = {
     "RTU": GrowattProtocolVersion.RTU,
     "RTU2": GrowattProtocolVersion.RTU2,
-    "TLXH": GrowattProtocolVersion.TLXH,
+    "TLX": GrowattProtocolVersion.TLX,
 }
 
 
@@ -119,6 +121,8 @@ CONFIG_SCHEMA = (
             cv.Optional(CONF_PV3): PV_SCHEMA,
             cv.Optional(CONF_PV4): PV_SCHEMA,
             cv.Optional(CONF_INVERTER_STATUS): sensor.sensor_schema(),
+            cv.Optional(CONF_FAULT_CODE): sensor.sensor_schema(),
+            cv.Optional(CONF_WARN_CODE): sensor.sensor_schema(),
             cv.Optional(CONF_FREQUENCY): sensor.sensor_schema(
                 unit_of_measurement=UNIT_HERTZ,
                 icon=ICON_CURRENT_AC,
@@ -171,6 +175,14 @@ async def to_code(config):
     if CONF_INVERTER_STATUS in config:
         sens = await sensor.new_sensor(config[CONF_INVERTER_STATUS])
         cg.add(var.set_inverter_status_sensor(sens))
+
+    if CONF_FAULT_CODE in config:
+        sens = await sensor.new_sensor(config[CONF_FAULT_CODE])
+        cg.add(var.set_fault_code_sensor(sens))
+
+    if CONF_WARN_CODE in config:
+        sens = await sensor.new_sensor(config[CONF_WARN_CODE])
+        cg.add(var.set_warn_code_sensor(sens))
 
     if CONF_FREQUENCY in config:
         sens = await sensor.new_sensor(config[CONF_FREQUENCY])

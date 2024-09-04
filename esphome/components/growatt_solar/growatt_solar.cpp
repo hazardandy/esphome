@@ -8,7 +8,7 @@ static const char *const TAG = "growatt_solar";
 
 static const uint8_t MODBUS_CMD_READ_IN_REGISTERS = 0x04;
 static const uint16_t MODBUS_READ_ADDRESS[] = {0, 0, 3000};  // indexed with enum GrowattProtocolVersion
-static const uint8_t MODBUS_REGISTER_COUNT[] = {33, 95, 95};  // indexed with enum GrowattProtocolVersion
+static const uint8_t MODBUS_REGISTER_COUNT[] = {33, 95, 168};  // indexed with enum GrowattProtocolVersion
 
 void GrowattSolar::loop() {
   // If update() was unable to send we retry until we can send.
@@ -130,8 +130,10 @@ void GrowattSolar::on_modbus_data(const std::vector<uint8_t> &data) {
       publish_1_reg_sensor_state(this->inverter_module_temp_, 93, ONE_DEC_UNIT);
       break;
     }
-    case TLXH: {
+    case TLX: {
       publish_1_reg_sensor_state(this->inverter_status_, 0, 1);
+      publish_1_reg_sensor_state(this->fault_code_, 167, 1);
+      publish_1_reg_sensor_state(this->warn_code_, 168, 1);
 
       publish_2_reg_sensor_state(this->pv_active_power_sensor_, 1, 2, ONE_DEC_UNIT);
 

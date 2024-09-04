@@ -29,7 +29,7 @@ class GrowattSolar : public PollingComponent, public modbus::ModbusDevice {
 
   void set_inverter_status_sensor(sensor::Sensor *sensor) { this->inverter_status_ = sensor; }
   void set_fault_code_sensor(sensor::Sensor *sensor) { this->fault_code_ = sensor; }
-  void set_warn_code_status_sensor(sensor::Sensor *sensor) { this->warn_code_ = sensor; }
+  void set_warn_code_sensor(sensor::Sensor *sensor) { this->warn_code_ = sensor; }
 
   void set_grid_frequency_sensor(sensor::Sensor *sensor) { this->grid_frequency_sensor_ = sensor; }
   void set_grid_active_power_sensor(sensor::Sensor *sensor) { this->grid_active_power_sensor_ = sensor; }
